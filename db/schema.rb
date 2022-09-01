@@ -10,10 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2022_08_31_203839) do
+ActiveRecord::Schema.define(version: 2022_09_01_164447) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "assignments", force: :cascade do |t|
+    t.bigint "task_id"
+    t.bigint "employee_id"
+    t.index ["employee_id"], name: "index_assignments_on_employee_id"
+    t.index ["task_id"], name: "index_assignments_on_task_id"
+  end
 
   create_table "departments", force: :cascade do |t|
     t.string "title"
@@ -30,6 +37,15 @@ ActiveRecord::Schema.define(version: 2022_08_31_203839) do
     t.index ["manager_id"], name: "index_dept_managers_on_manager_id"
   end
 
+  create_table "employees", force: :cascade do |t|
+    t.bigint "department_id"
+    t.string "email"
+    t.string "password_digest"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["department_id"], name: "index_employees_on_department_id"
+  end
+
   create_table "managers", force: :cascade do |t|
     t.string "email"
     t.string "password_digest"
@@ -38,6 +54,21 @@ ActiveRecord::Schema.define(version: 2022_08_31_203839) do
     t.datetime "updated_at", null: false
   end
 
+  create_table "tasks", force: :cascade do |t|
+    t.bigint "department_id"
+    t.integer "scope"
+    t.string "title"
+    t.string "description"
+    t.integer "status"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["department_id"], name: "index_tasks_on_department_id"
+  end
+
+  add_foreign_key "assignments", "employees"
+  add_foreign_key "assignments", "tasks"
   add_foreign_key "dept_managers", "departments"
   add_foreign_key "dept_managers", "managers"
+  add_foreign_key "employees", "departments"
+  add_foreign_key "tasks", "departments"
 end
