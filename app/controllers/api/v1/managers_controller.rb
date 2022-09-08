@@ -6,7 +6,7 @@ class Api::V1::ManagersController < ApplicationController
 
   def create 
     manager = Manager.new(manager_params)
-    binding.pry
+
     if params[:name].nil? || params[:password].nil? || params[:password_confirmation].nil?
       render json: SadpathSerializer.incomplete_fields, status: :bad_request
     elsif Manager.find_by(email: manager.email)
