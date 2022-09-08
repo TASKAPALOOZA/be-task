@@ -38,6 +38,7 @@ group :development, :test do
   gem "simplecov"
   gem 'rspec_junit_formatter'
   gem "figaro"
+  gem "database_cleaner-active_record"
 end
 
 group :development do
