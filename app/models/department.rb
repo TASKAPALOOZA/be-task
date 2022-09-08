@@ -3,4 +3,6 @@ class Department < ApplicationRecord
 
   has_many :dept_managers
   has_many :managers, through: :dept_managers
+  has_many :tasks
+  has_many :employees
 end 
