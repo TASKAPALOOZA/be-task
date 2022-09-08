@@ -1,7 +1,6 @@
 class ManagerSerializer
 
   def self.new_manager_data(manager)
-    binding.pry
     {
       "data": {
         "type": "manager",
